@@ -29,4 +29,5 @@ dependencies {
     implementation 'androidx.navigation:navigation-runtime:2.1.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.android.support:design:29'
+    implementation "androidx.viewpager:viewpager:1.0.0"
 }

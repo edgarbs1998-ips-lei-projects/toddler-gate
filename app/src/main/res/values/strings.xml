@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ToddlerGate1.2</string>
     <string name="desc_CloseIcon">Close application</string>
+    <string name="desc_OptionsIcon">Open Options</string>
+    <string name="desc_PianoIcon">Open Piano Application</string>
+    <string name="desc_CameraIcon">Open Camera Application</string>
+    <string name="desc_FolderIcon">Open Folder Application</string>
 </resources>

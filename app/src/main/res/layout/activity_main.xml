@@ -5,40 +5,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/bg1_tentativa"
     >
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/myViewPager"
+        android:layout_width="413dp"
+        android:layout_height="678dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <ImageView
+        android:id="@+id/imageView_Piano_Icon"
+        android:layout_width="96dp"
+        android:layout_height="66dp"
+        android:contentDescription="@string/desc_PianoIcon"
+        android:translationX="30dp"
+        android:translationY="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_piano" />
+
+    <ImageView
+        android:id="@+id/imageView_Camera_Icon"
+        android:layout_width="85dp"
+        android:layout_height="78dp"
+        android:contentDescription="@string/desc_CameraIcon"
+        android:translationX="27dp"
+        android:translationY="30dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView_Piano_Icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_camera" />
+
+    <ImageView
+        android:id="@+id/imageView_Folder_Icon"
+        android:layout_width="67dp"
+        android:layout_height="72dp"
+        android:contentDescription="@string/desc_FolderIcon"
+        android:translationX="35dp"
+        android:translationY="30dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView_Camera_Icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_folder" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="411dp"
         android:layout_height="52dp"
         android:background="@color/colorOrange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView_Close_Icon"
                 android:layout_width="53dp"
                 android:layout_height="41dp"
+                android:contentDescription="@string/desc_CloseIcon"
                 android:src="@drawable/icon_close_com_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.298"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.545" />
+
+            <ImageView
+                android:id="@+id/imageView_Options_Icon"
+                android:layout_width="162dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="36dp"
+                android:contentDescription="@string/desc_OptionsIcon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.951"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon_options" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
