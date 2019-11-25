@@ -3,6 +3,8 @@ package com.example.toddlergate12;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -28,22 +30,38 @@ public class MainActivity extends AppCompatActivity {
     ViewPager vp;
     PagerAdapter adapter;
 
+    ImageView imageView_Close;
+    ImageView imageView_Options;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
+
+        setTheme(R.layout.activity_main);
         setContentView(R.layout.activity_main);
+
+
 
         adapter=new PagerAdapter(this);
         vp = (ViewPager)findViewById(R.id.myViewPager);
         vp.setAdapter(adapter);
 
 
-        ImageView imageView_Close = (ImageView)findViewById(R.id.imageView_Close_Icon);
+        imageView_Close = (ImageView)findViewById(R.id.imageView_Close_Icon);
         imageView_Close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
                 System.exit(0);
+            }
+        });
+
+        imageView_Options = (ImageView)findViewById(R.id.imageView_Options_Icon);
+        imageView_Options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ActivitySetPassword.class));
             }
         });
     }
