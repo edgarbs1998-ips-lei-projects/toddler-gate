@@ -13,22 +13,25 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name="parents_area.parents_area_main"
             android:theme="@style/TitleBarActivity"
-            android:label="Parents Area">
+            android:label="Parents Area"> </activity>
         <activity android:name=".ActivitySetPassword"
             android:label="@string/app_title"
-
-            android:theme="@style/ActionBarTheme"
-            ></activity>
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/ActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/SplashTheme">
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
     </application>
 
 </manifest>
