@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">ToddlerGate1.2</string>
+    <string name="parents_area_menu_location">LOCATION HISTORY</string>
+    <string name="parents_area_menu_password">MANAGE PASSWORD</string>
+    <string name="parents_area_menu_profiles">MANAGE PROFILES</string>
+    <string name="parents_area_menu_time">MANAGE TIME LIMITS</string>
     <string name="desc_CloseIcon">Close application</string>
     <string name="desc_OptionsIcon">Open Options</string>
     <string name="desc_PianoIcon">Open Piano Application</string>

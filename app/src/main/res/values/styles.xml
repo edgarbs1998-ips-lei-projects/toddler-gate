@@ -18,4 +18,8 @@
         <item name="colorPrimary">@color/colorBlueLight</item>
     </style>
 
+    <style name="TitleBarActivity" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorBlueLight</item>
+    </style>
 </resources>
