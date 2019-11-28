@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +37,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
     private GoogleMap mMap;
     public Marker whereAmI;
     private final String TAG = "MAPS";
+    private Location lastLocationloc = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +52,22 @@ public class localization_history extends FragmentActivity implements OnMapReady
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        System.out.println(permissions[0] );
         if (permissions.length == 1 &&
-                permissions[0] ==
-                        android.Manifest.permission.ACCESS_FINE_LOCATION &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.checkSelfPermission(this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this,
-                            android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider callingActivityCompat#requestPermissions here to request the missing
-                //permissions, and then overriding
-                // public void onRequestPermissionsResult(intrequestCode, String[] permissions, int[] grantResults)
-                // to handle the case where the user grants thepermission. See the documentation
-                // for ActivityCompat#requestPermissions for moredetails.
-                return;
-            }
+                permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this,
+                            android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                            PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(this,
+                                    android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                                    PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider callingActivityCompat#requestPermissions here to request the missing
+                        //permissions, and then overriding
+                        // public void onRequestPermissionsResult(intrequestCode, String[] permissions, int[] grantResults)
+                        // to handle the case where the user grants thepermission. See the documentation
+                        // for ActivityCompat#requestPermissions for moredetails.
+                        return;
+                    }
             mMap.setMyLocationEnabled(true);
         } else {
             // Permission was denied. Display an error message.
@@ -90,7 +92,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
         if (location != null) { //update the map location
             LatLng latlng = fromLocationToLatLng(location);
 
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 17));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 21));
             if (whereAmI != null) whereAmI.remove();
             whereAmI = mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title("Here I Am."));
             double lat = location.getLatitude();
@@ -131,15 +133,21 @@ public class localization_history extends FragmentActivity implements OnMapReady
                 }
             }
         } else Log.e(TAG, "Invalid Location");
-        myLocationText.setText("Your current Position is:\n" +
-                latLongString + "\n\n" + addressString);
+        //myLocationText.setText("Your current Position is:\n" + latLongString + "\n\n" + addressString);
     }
 
     private final LocationListener locationListener = new
             LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
+                    if (lastLocationloc == null) {
+                        lastLocationloc = location;
+                    }
                     updateWithNewLocation(location);
+                    LatLng lastLatLng= fromLocationToLatLng(lastLocationloc);
+                    LatLng thisLatLng= fromLocationToLatLng(location);
+                    lastLocationloc= location;
+                    mMap.addPolyline(new PolylineOptions().add(lastLatLng).add(thisLatLng).width(4).color(Color.RED));
                 }
                 @Override
                 public void onStatusChanged(String provider, int status,
@@ -180,20 +188,29 @@ public class localization_history extends FragmentActivity implements OnMapReady
         String provider = locationManager.getBestProvider(criteria,
                 true);
         try {
-            Location l =
-                    locationManager.getLastKnownLocation(provider);
-            LatLng latlng = fromLocationToLatLng(l);
+            Location l = locationManager.getLastKnownLocation(provider);
 
-            //mMap.addMarker(newMarkerOptions().position(latlng).title("Marker!"));
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
 
-            whereAmI = mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-            // Zoom in
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,
-                    17));
-            updateWithNewLocation(l);
-            locationManager.requestLocationUpdates(provider, 2000, 10,
-                    locationListener);
+            if (l != null) {
+                Log.e("TAG", "GPS is on");
+                //mMap.addMarker(newMarkerOptions().position(latlng).title("Marker!"));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+                LatLng latlng = fromLocationToLatLng(l);
+                whereAmI = mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                // Zoom in
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,
+                        21));
+                updateWithNewLocation(l);
+                locationManager.requestLocationUpdates(provider, 2000, 10,
+                        locationListener);
+            }
+            else{
+                String bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
+
+                //This is what you need:
+                locationManager.requestLocationUpdates(bestProvider, 1000,0, locationListener);
+            }
+
         } catch (SecurityException e) {
             Log.e(TAG, e.getMessage());
         }
