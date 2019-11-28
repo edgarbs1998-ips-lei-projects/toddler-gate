@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_reset"
+        android:icon="@drawable/ic_go_back_arrow"
+        android:title="RESET"/>
+
+    <item
+        android:id="@+id/navigation_screenshot"
+        android:icon="@drawable/ic_photo_camera"
+        android:title="SCREENSHOT"/>
+</menu>

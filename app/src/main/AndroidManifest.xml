@@ -37,7 +37,8 @@
 
         <activity
             android:name="parents_area.localization_history"
-            android:label="@string/title_activity_localization_history">
+            android:label="@string/title_activity_localization_history"
+            android:theme="@style/TitleBarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

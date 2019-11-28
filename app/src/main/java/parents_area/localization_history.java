@@ -15,6 +15,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.toddlergate12.R;
@@ -85,8 +86,8 @@ public class localization_history extends FragmentActivity implements OnMapReady
     }
 
     private void updateWithNewLocation(Location location) {
-        TextView myLocationText;
-        myLocationText = (TextView) findViewById(R.id.locinfo);
+        //TextView myLocationText;
+        //myLocationText = (TextView) findViewById(R.id.locinfo);
         String latLongString = "No location found";
         String addressString = "No address found";
         if (location != null) { //update the map location
