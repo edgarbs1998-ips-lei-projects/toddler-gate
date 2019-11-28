@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name="parents_area.parents_area_main"
             android:theme="@style/TitleBarActivity"
-            android:label="Parents Area">
+            android:label="Parents Area"></activity>
         <activity android:name=".ActivitySetPassword"
             android:label="@string/app_title"
 
@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <!--<activity android:name=".MainActivity"></activity>-->
     </application>
 
 </manifest>
