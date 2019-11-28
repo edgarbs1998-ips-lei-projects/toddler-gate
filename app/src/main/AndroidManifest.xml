@@ -21,8 +21,7 @@
         <activity android:name="parents_area.parents_area_main"
             android:theme="@style/TitleBarActivity"
             android:label="Parents Area">
-        <activity android:name=".ActivitySetPassword"
-            android:label="@string/app_title"
+        </activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -45,28 +44,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="parents_area.parents_area_main"
-            android:label="Parents Area"
-            android:theme="@style/TitleBarActivity"></activity>
+
         <activity
             android:name="com.example.toddlergate12.ActivitySetPassword"
             android:label="@string/app_title"
             android:theme="@style/ActionBarTheme">
         </activity>
+
         <activity
             android:name="com.example.toddlergate12.MainActivity"
             android:theme="@style/SplashTheme">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
-        <!--<activity android:name=".MainActivity"></activity>-->
+
     </application>
 
 </manifest>
