@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,11 +28,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
     ViewPager vp;
     PagerAdapter adapter;
-
+    */
     ImageView imageView_Close;
     ImageView imageView_Options;
+
+    String[] labels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
+        Resources res = getResources();
+        labels = res.getStringArray(R.array.headings);
 
 
+        /*
         adapter=new PagerAdapter(this);
         vp = (ViewPager)findViewById(R.id.myViewPager);
         vp.setAdapter(adapter);
-
+        */
 
         imageView_Close = (ImageView)findViewById(R.id.imageView_Close_Icon);
         imageView_Close.setOnClickListener(new View.OnClickListener() {
