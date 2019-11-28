@@ -1,8 +1,6 @@
 package com.example.toddlergate12;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +8,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
-
-import static android.view.LayoutInflater.*;
 
 public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
 

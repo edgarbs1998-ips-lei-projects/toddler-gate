@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ToddlerGate1.2</string>
+    <string name="app_name">ToddlerGate</string>
     <string name="parents_area_menu_location">LOCATION HISTORY</string>
     <string name="parents_area_menu_password">MANAGE PASSWORD</string>
     <string name="parents_area_menu_profiles">MANAGE PROFILES</string>
@@ -10,4 +10,5 @@
     <string name="desc_CameraIcon">Open Camera Application</string>
     <string name="desc_FolderIcon">Open Folder Application</string>
     <string name="app_title">Toddler Gate</string>
+    <string name="title_activity_localization_history">Map</string>
 </resources>
