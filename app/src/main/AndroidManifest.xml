@@ -18,6 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name="parents_area.parents_area_main"
+            android:theme="@style/TitleBarActivity"
+            android:label="Parents Area">
+        <activity android:name=".ActivitySetPassword"
+            android:label="@string/app_title"
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -61,6 +66,7 @@
             </intent-filter>
             -->
         </activity>
+        <!--<activity android:name=".MainActivity"></activity>-->
     </application>
 
 </manifest>
