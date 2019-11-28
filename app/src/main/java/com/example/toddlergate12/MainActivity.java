@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         Resources res = getResources();
         labels = res.getStringArray(R.array.headings);
-
+        GridView grid = (GridView)findViewById(R.id.petsGrid);
+        GridAdapter gAdapter = new GridAdapter(getApplicationContext(), labels);
+        grid.setAdapter(gAdapter);
 
         /*
         adapter=new PagerAdapter(this);

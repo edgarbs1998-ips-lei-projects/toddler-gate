@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".MainActivity">
 
 
@@ -69,11 +70,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:numColumns="2"
+        android:numColumns="4"
         android:stretchMode="columnWidth"
         android:verticalSpacing="20dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

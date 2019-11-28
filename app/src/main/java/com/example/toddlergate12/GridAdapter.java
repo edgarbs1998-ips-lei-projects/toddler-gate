@@ -5,14 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class GridAdapter extends BaseAdapter {
 
     private Integer[] petImages = {
-            R.drawable.dax,
-            R.drawable.icon_folder,
-            R.drawable.ic_profiles_icon,
-            R.drawable.icon_piano,
             R.drawable.icon_camera,
             R.drawable.ic_stopwatch_icon,
             R.drawable.ic_launcher_foreground
@@ -28,21 +26,29 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return petImages.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return position;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+
+        if(convertView == null){
+            convertView = thisInflater.inflate(R.layout.grid_item, parent, false);
+            TextView textHeading = (TextView)convertView.findViewById(R.id.petHeading);
+            ImageView thumbnailImage = (ImageView)convertView.findViewById(R.id.petImage);
+            textHeading.setText(imageLabels[position]);
+            thumbnailImage.setImageResource(petImages[position]);
+        }
+        return convertView;
     }
 }
