@@ -11,13 +11,14 @@
         android:layout_height="wrap_content" />-->
 
     <fragment
-        android:id="@+id/map"
+        android:id="@+id/map_locatization_history"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="509dp"
         tools:context=".MainActivity" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/map_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorOrange"
