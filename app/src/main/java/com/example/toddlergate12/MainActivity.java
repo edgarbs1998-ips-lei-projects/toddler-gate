@@ -43,14 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
 
-        setTheme(R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
-        Resources res = getResources();
-        labels = res.getStringArray(R.array.headings);
-        GridView grid = (GridView)findViewById(R.id.petsGrid);
-        GridAdapter gAdapter = new GridAdapter(getApplicationContext(), labels);
-        grid.setAdapter(gAdapter);
 
         /*
         adapter=new PagerAdapter(this);
