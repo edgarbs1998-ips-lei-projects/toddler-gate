@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-feature android:name="android.hardware.location.gps" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +22,13 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name="parents_area.parents_area_main"
             android:theme="@style/TitleBarActivity"
-            android:label="Parents Area">
-        </activity>
+            android:label="Parents Area"></activity>
+        <activity android:name="bd_related.ActivitySetPassword"
+            android:label="@string/app_title"
 
+            android:theme="@style/ActionBarTheme"
+            ></activity>
+        <activity android:name="bd_related.NewPassword"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,7 +43,8 @@
 
         <activity
             android:name="parents_area.localization_history"
-            android:label="@string/title_activity_localization_history">
+            android:label="@string/title_activity_localization_history"
+            android:theme="@style/TitleBarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

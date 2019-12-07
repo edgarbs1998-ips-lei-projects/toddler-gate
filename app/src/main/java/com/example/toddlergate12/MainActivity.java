@@ -1,17 +1,15 @@
 package com.example.toddlergate12;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
+
+
+import bd_related.ActivitySetPassword;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,14 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
 
-        setTheme(R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
-        Resources res = getResources();
-        labels = res.getStringArray(R.array.headings);
-        GridView grid = (GridView)findViewById(R.id.petsGrid);
-        GridAdapter gAdapter = new GridAdapter(getApplicationContext(), labels);
-        grid.setAdapter(gAdapter);
 
         /*
         adapter=new PagerAdapter(this);
@@ -62,12 +54,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+    //botao de back no tlm
     @Override
     public void onBackPressed(){
         Toast toast = Toast.makeText(this, "BabyDog GOAT", Toast.LENGTH_SHORT);
         toast.show();
     }
-
+    //reconhece ao carregar os 3 botoes do tlm
     @Override
     protected void onUserLeaveHint(){
         Toast.makeText(getApplicationContext(), "BabyDog not GOAT", Toast.LENGTH_SHORT).show();
