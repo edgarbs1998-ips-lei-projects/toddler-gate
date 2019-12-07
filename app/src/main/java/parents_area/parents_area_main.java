@@ -68,7 +68,7 @@ public class parents_area_main extends AppCompatActivity implements View.OnClick
 
             case R.id.layout_password:
                 //set message
-                alertDialog.setMessage("Password Button Clicked");
+                alertDialog.setMessage("bd_related.Password Button Clicked");
                 // show it
                 alertDialog.show();
                 break;

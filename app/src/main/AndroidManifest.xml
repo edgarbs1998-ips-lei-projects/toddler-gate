@@ -22,9 +22,13 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name="parents_area.parents_area_main"
             android:theme="@style/TitleBarActivity"
-            android:label="Parents Area">
-        </activity>
+            android:label="Parents Area"></activity>
+        <activity android:name="bd_related.ActivitySetPassword"
+            android:label="@string/app_title"
 
+            android:theme="@style/ActionBarTheme"
+            ></activity>
+        <activity android:name="bd_related.NewPassword"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
