@@ -10,4 +10,11 @@
     <string name="desc_CameraIcon">Open Camera Application</string>
     <string name="desc_FolderIcon">Open Folder Application</string>
     <string name="app_title">Toddler Gate</string>
+
+
+    <!-- BD -->
+    <string name="bloco_de_notas">Welcome!</string>
+    <string name="insert_new_password">Insert New Password!</string>
+    <string name="list_passwords">List Passwords!</string>
+    <string name="bBack">Back</string>
 </resources>

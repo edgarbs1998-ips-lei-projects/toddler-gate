@@ -1,31 +1,15 @@
 package com.example.toddlergate12;
 
-import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.viewpager.widget.ViewPager;
 
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.List;
+import bd_related.ActivitySetPassword;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,12 +54,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+    //botao de back no tlm
     @Override
     public void onBackPressed(){
         Toast toast = Toast.makeText(this, "BabyDog GOAT", Toast.LENGTH_SHORT);
         toast.show();
     }
-
+    //reconhece ao carregar os 3 botoes do tlm
     @Override
     protected void onUserLeaveHint(){
         Toast.makeText(getApplicationContext(), "BabyDog not GOAT", Toast.LENGTH_SHORT).show();
