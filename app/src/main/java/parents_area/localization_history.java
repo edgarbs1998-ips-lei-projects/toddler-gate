@@ -11,17 +11,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +40,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +52,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
     private Location lastLocationloc = null;
     List<Polyline> polylines = new ArrayList<Polyline>();
     BottomNavigationView bottomNav;
+    View mapView;
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -70,6 +67,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
         verifyStoragePermissions(this);
         setContentView(R.layout.activity_localization_history);
         bottomNav =  findViewById(R.id.map_bottom_nav);
+        mapView  = findViewById(R.id.map_locatization_history);
         // Obtain the SupportMapFragment and get notified when the map_locatization_history is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager()
@@ -91,7 +89,38 @@ public class localization_history extends FragmentActivity implements OnMapReady
                         polylines.clear();
                         break;
                     case R.id.navigation_screenshot:
-                        tackeAndSaveScreenShot();
+
+                        GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
+                            Bitmap bitmap;
+
+                            @Override
+                            public void onSnapshotReady(Bitmap snapshot) {
+                                bitmap = snapshot;
+
+                                String file_path = Environment.getExternalStorageDirectory() +
+                                        "/ToddlerGate-Screenshots";
+
+                                Log.d("MAPLOG", file_path);
+
+                                File dir = new File(file_path);
+                                if(!dir.exists())
+                                    dir.mkdirs();
+                                File file = new File(dir, "SCREENSHOT-MAP"  + ".png");
+                                FileOutputStream fOut = null;
+                                try {
+                                    fOut = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                                    fOut.flush();
+                                    fOut.close();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        mMap.snapshot(callback);
                         break;
                 }
                 return false;
@@ -99,7 +128,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
         });
         mapFragment.getMapAsync(this);
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -267,47 +295,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
 
         } catch (SecurityException e) {
             Log.e(TAG, e.getMessage());
-        }
-    }
-
-    public void tackeAndSaveScreenShot() {
-        View MainView = findViewById(R.id.map_locatization_history);
-        MainView.setDrawingCacheEnabled(true);
-        MainView.buildDrawingCache();
-        Bitmap MainBitmap = MainView.getDrawingCache();
-        Rect frame = new Rect();
-
-        this.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-        //to remove statusBar from the taken sc
-        int statusBarHeight = frame.top;
-        //using screen size to create bitmap
-        int width = this.getWindowManager().getDefaultDisplay().getWidth();
-        int height = this.getWindowManager().getDefaultDisplay().getHeight();
-        Bitmap OutBitmap = Bitmap.createBitmap(MainBitmap, 0, 0, MainView.getWidth(), MainView.getHeight());
-        MainView.destroyDrawingCache();
-        try {
-
-           // String path = Environment.getExternalStorageDirectory().toString();
-
-            //String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-            OutputStream fOut = null;
-            //you can also using current time to generate name
-            String name="YourName";
-            File file = new File(path, name + ".png");
-            fOut = new FileOutputStream(file);
-
-            OutBitmap.compress(Bitmap.CompressFormat.PNG, 90, fOut);
-            fOut.flush();
-            fOut.close();
-
-            //this line will add the saved picture to gallery
-            MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
