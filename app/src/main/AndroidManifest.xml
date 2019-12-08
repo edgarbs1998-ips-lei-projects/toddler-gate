@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.toddlergate12">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -9,7 +8,9 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+
     <uses-feature android:name="android.hardware.location.gps" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -20,15 +21,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name="parents_area.parents_area_main"
-            android:theme="@style/TitleBarActivity"
-            android:label="Parents Area"></activity>
-        <activity android:name="bd_related.ActivitySetPassword"
+        <activity
+            android:name=".EntryActivity"
+            android:theme="@style/SplashTheme"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="parents_area.parents_area_main"
+            android:label="Parents Area"
+            android:theme="@style/TitleBarActivity" />
+        <activity
+            android:name="bd_related.ActivitySetPassword"
             android:label="@string/app_title"
-
-            android:theme="@style/ActionBarTheme"
-            ></activity>
-        <activity android:name="bd_related.NewPassword"></activity>
+            android:theme="@style/ActionBarTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,26 +52,12 @@
 
         <activity
             android:name="parents_area.localization_history"
-            android:label="@string/title_activity_localization_history"
-            android:theme="@style/TitleBarActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:label="@string/parents_area_menu_location"
+            android:theme="@style/TitleBarActivity"></activity>
         <activity
-            android:name="com.example.toddlergate12.ActivitySetPassword"
-            android:label="@string/app_title"
-            android:theme="@style/ActionBarTheme">
-        </activity>
-
-        <activity
-            android:name="com.example.toddlergate12.MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/SplashTheme">
-        </activity>
-
+            </activity>
     </application>
 
 </manifest>
