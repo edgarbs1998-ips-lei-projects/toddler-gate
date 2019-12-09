@@ -23,7 +23,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <activity
-            android:name=".CustomFolder"
+            android:name="custom_folder.CustomFolder"
             android:label="Home > Custom Folder"
             android:theme="@style/TitleBarActivity">
             <intent-filter>
