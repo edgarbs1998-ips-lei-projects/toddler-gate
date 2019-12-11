@@ -3,6 +3,8 @@ package custom_folder;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -21,6 +24,7 @@ import com.example.toddlergate12.R;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,15 +48,69 @@ public class CustomFolder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_folder);
         this.listview = (ListView) findViewById(R.id.file_listView);
+
+        final Context thiscon = this;
         this.listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                File currentFile = new File(PathsList.get(position));
+                String currentFileExtention = getFileExtension(currentFile);
+                String currPath = PathsList.get(position);
+                Uri currentFileUri = Uri.parse("file://" + currPath);
+                String MimeType = getMimeType(currPath);
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
 
-                switch (getFileExtension(new File(PathsList.get(position)))) {
+
+
+                if(MimeType.contains("image")){
+                    intent.setDataAndType(currentFileUri, "image/*");
+                    startActivity(intent);
+                }
+
+                if(MimeType.contains("video")){
+                    intent.setDataAndType(currentFileUri, "video/*");
+
+                    try {
+                        startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Toast.makeText(CustomFolder.this,
+                                "No Application Available to Play Videos",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if(MimeType.contains("audio")){
+                    intent.setDataAndType(currentFileUri, "audio/*");
+
+                    try {
+                        startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Toast.makeText(CustomFolder.this,
+                                "No Application Available to Play Audio",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if(MimeType.contains("pdf")){
+                    intent.setDataAndType(Uri.parse("file://" + PathsList.get(position)), "application/pdf");
+                    try {
+                        startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Toast.makeText(CustomFolder.this,
+                                "No Application Available to View PDF",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+
+                /*switch (currentFileExtention) {
                     //remove all lines on the map_locatization_history
                     case "pdf":
 
@@ -76,7 +134,7 @@ public class CustomFolder extends AppCompatActivity {
                         //intent.setDataAndType(Uri.parse("file://" + PathsList.get(position)), "image/*");
                         break;
 
-                }
+                }*/
 
             }
         });
@@ -104,9 +162,9 @@ public class CustomFolder extends AppCompatActivity {
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, imagens);
 
         //listview.setAdapter(adapter);
-     /*   String path = Environment.getExternalStorageDirectory().toString()+"/Pictures";
-        Log.d("Files", "Path: " + path);
-        File directory = new File(path);
+     /*   String customFolderPath = Environment.getExternalStorageDirectory().toString()+"/Pictures";
+        Log.d("Files", "Path: " + customFolderPath);
+        File directory = new File(customFolderPath);
         File[] files = directory.listFiles();
         Log.d("Files", "Size: "+ files.length);
         for (int i = 0; i < files.length; i++)
@@ -132,28 +190,55 @@ public class CustomFolder extends AppCompatActivity {
         mCursor.moveToFirst();*/
 
 
-        String path = Environment.getExternalStorageDirectory().toString()+"/ToddlerGate-Screenshots";
-        Log.d("Files", "Path: " + path);
-        File directory = new File(path);
-        List<File> folderFilesList = Arrays.asList(directory.listFiles());
+        String customFolderPath = Environment.getExternalStorageDirectory().toString()+"/ToddlerGate-Screenshots";
+        Log.d("Files", "Path: " + customFolderPath);
+        File directory = new File(customFolderPath);
+        File [] folderfiles = directory.listFiles();
+
+        Arrays.sort(folderfiles, new Comparator<File>() {
+                    @Override
+                    public int compare(File file1, File file2) {
+                        if (getMimeType(file1.getPath()).equals(getMimeType(file2.getPath()))) {
+                            return 0;
+                        }
+                        if (getMimeType(file1.getPath()).equals("")) {
+                            return -1;
+                        }
+                        if (getMimeType(file2.getPath()).equals("")) {
+                            return 1;
+                        }
+                        return getMimeType(file1.getPath()).compareTo(getMimeType(file2.getPath()));
+                    }
+                });
+
+
+        Log.d("SortedFiles", "files: " + Arrays.toString(folderfiles));
+        List<File> folderFilesList = Arrays.asList(folderfiles);
 
 
                 for(File file : folderFilesList) {
                     String fname = folderFilesList.get(folderFilesList.indexOf(file)).getName();
                     String fpath = folderFilesList.get(folderFilesList.indexOf(file)).getPath();
+                    String fMimeType = getMimeType(fpath);
 
+                    Log.d("Files", " - File Name : " + fname);
+                    Log.d("Files", " - File Path : " + fpath);
                     if(fname != null && fpath != null){
                         //imagens.add(image_name);
                         //ListviewTitle.add(image_name);
+
                         ListviewDescription.add(fname);
                         PathsList.add(fpath);
-                        if(getFileExtension(new File(fpath)).equals("png"))
+                        if(fMimeType.contains("image"))
                             ListviewImages.add(R.drawable.ic_picture_thumbnail);
+                        if(fMimeType.contains("audio"))
+                            ListviewImages.add(R.drawable.ic_audio_file);
+                        if(fMimeType.contains("video"))
+                            ListviewImages.add(R.drawable.ic_video_player);
                         if(getFileExtension(new File(fpath)).equals("pdf"))
                             ListviewImages.add(R.drawable.ic_pdf_icon);
+
                     }
-                    Log.d("Files", " - File Name : " + fname);
-                    Log.d("Files", " - File Path : " + fpath);
                 }
 
 
@@ -215,5 +300,16 @@ public class CustomFolder extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private String getMimeType(String url)
+    {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase());
+        }
+        return type;
     }
 }
