@@ -1,0 +1,25 @@
+{
+  "name": "toddlergate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "jsc-android": "245459.0.0",
+    "react": "16.9.0",
+    "react-native": "0.61.5",
+    "styled-components": "^4.4.1",
+    "react-native-scalable-image": "^1.0.0",
+    "react-native-sound": "^0.11.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.19.1"
+  },
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  }
+}
