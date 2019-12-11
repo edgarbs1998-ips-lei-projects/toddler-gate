@@ -37,7 +37,8 @@
         <activity
             android:name="bd_related.ActivitySetPassword"
             android:label="@string/app_title"
-            android:theme="@style/ActionBarTheme" />
+            android:theme="@style/ActionBarTheme"
+            android:noHistory="true"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

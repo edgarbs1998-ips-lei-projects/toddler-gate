@@ -47,8 +47,7 @@ public class ActivitySetPassword extends AppCompatActivity {
                         newPW = editNewPW.getText().toString();
                         newConfPW = editConfPW.getText().toString();
 
-                        Log.e("ASP", "------------- newConfPW 2 -> " + newConfPW);
-                        Log.e("ASP", "------------- newPW 2 -> " + newPW);
+
                         if (newConfPW.equals(newPW)){
                             boolean isInserted = myDB.insertData(newConfPW);
                             if(isInserted) {
