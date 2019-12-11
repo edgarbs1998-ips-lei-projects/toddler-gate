@@ -17,4 +17,5 @@
     <string name="insert_new_password">Insert New Password!</string>
     <string name="list_passwords">List Passwords!</string>
     <string name="bBack">Back</string>
+    <string name="title_activity_show_capture">ShowCaptureActivity</string>
 </resources>
