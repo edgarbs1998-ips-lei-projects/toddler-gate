@@ -24,11 +24,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".EntryActivity" />
+        <activity android:name=".ActivityEditPassword"
+            android:theme="@style/TitleBarActivity"></activity>
         <activity
-            android:name=".CameraMain"
+            android:name=".EntryActivity"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
+            android:name=".CameraMain"
+            android:noHistory="true"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,6 +45,7 @@
         <activity
             android:name="bd_related.ActivitySetPassword"
             android:label="@string/app_title"
+            android:noHistory="true"
             android:theme="@style/ActionBarTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -61,7 +65,8 @@
             android:theme="@style/TitleBarActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/SplashTheme">
+            </activity>
     </application>
 
 </manifest>

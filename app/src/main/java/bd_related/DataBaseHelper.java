@@ -37,6 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, password);
         long result = db.insert(TABLE_NAME,null, contentValues);
+
         if(result == -1)
             return false;
         else
@@ -46,7 +47,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
-        Log.e("EA", "---------- res -> " + res.toString());
         return res;
     }
+
+    public boolean updateData(String id, String password){
+        Log.e("bot nav","-------------  entrei no updataData -------------");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, password);
+        db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
+        Log.e("bot nav","-------------  sair do updataData -------------");
+        return true;
+    }
+
+
 }
