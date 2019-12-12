@@ -25,16 +25,19 @@
             android:name="custom_folder.CustomFolder"
             android:label="Home > Custom Folder"
             android:theme="@style/TitleBarActivity">
+
+        </activity>
+        <activity
+            android:name="parents_area.parents_area_main"
+            android:label="Parents Area"
+            android:theme="@style/TitleBarActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="parents_area.parents_area_main"
-            android:label="Parents Area"
-            android:theme="@style/TitleBarActivity" />
         <activity
             android:name="bd_related.ActivitySetPassword"
             android:label="@string/app_title"
@@ -55,7 +58,9 @@
         <activity
             android:name="parents_area.localization_history"
             android:label="@string/parents_area_menu_location"
-            android:theme="@style/TitleBarActivity" />
+            android:theme="@style/TitleBarActivity" >
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/SplashTheme" />

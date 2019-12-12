@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -60,10 +61,12 @@ public class parents_area_main extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
 
             case R.id.layout_location:
-                    // set message
-                    alertDialog.setMessage("Location Button Clicked");
-                    // show it
-                    alertDialog.show();
+               /*     // set message
+                alertDialog.setMessage("Location Button Clicked");
+                // show it
+                alertDialog.show();*/
+
+                startActivity(new Intent(parents_area_main.this, localization_history.class));
                 break;
 
             case R.id.layout_password:

@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -17,11 +19,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.toddlergate12.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,8 +42,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -97,26 +101,36 @@ public class localization_history extends FragmentActivity implements OnMapReady
                             public void onSnapshotReady(Bitmap snapshot) {
                                 bitmap = snapshot;
 
-                                String file_path = Environment.getExternalStorageDirectory() +
-                                        "/ToddlerGate-Screenshots";
+                                OutputStream fout = null;
 
-                                Log.d("MAPLOG", file_path);
+                                String filePath = System.currentTimeMillis() + ".jpeg";
 
-                                File dir = new File(file_path);
-                                if(!dir.exists())
-                                    dir.mkdirs();
-                                File file = new File(dir, "SCREENSHOT-MAP"  + ".png");
-                                FileOutputStream fOut = null;
-                                try {
-                                    fOut = new FileOutputStream(file);
-                                    bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-                                    fOut.flush();
-                                    fOut.close();
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                try
+                                {
+                                    fout = openFileOutput(filePath,
+                                            MODE_WORLD_READABLE);
+
+                                    // Write the string to the file
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
+                                    fout.flush();
+                                    fout.close();
                                 }
+                                catch (FileNotFoundException e)
+                                {
+                                    // TODO Auto-generated catch block
+                                    Log.d("ImageCapture", "FileNotFoundException");
+                                    Log.d("ImageCapture", e.getMessage());
+                                    filePath = "";
+                                }
+                                catch (IOException e)
+                                {
+                                    // TODO Auto-generated catch block
+                                    Log.d("ImageCapture", "IOException");
+                                    Log.d("ImageCapture", e.getMessage());
+                                    filePath = "";
+                                }
+
+                                openShareImageDialog(filePath);
                             }
                         };
 
@@ -276,8 +290,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
 
             if (l != null) {
                 Log.e("TAG", "GPS is on");
-                //mMap.addMarker(newMarkerOptions().position(latlng).title("Marker!"));
-                //mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
                 LatLng latlng = fromLocationToLatLng(l);
                 whereAmI = mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                 // Zoom in
@@ -309,6 +321,30 @@ public class localization_history extends FragmentActivity implements OnMapReady
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
+        }
+    }
+
+    public void openShareImageDialog(String filePath)
+    {
+        File file = this.getFileStreamPath(filePath);
+
+        if(!filePath.equals(""))
+        {
+            final ContentValues values = new ContentValues(2);
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+            values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
+            final Uri contentUriFile = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setType("image/jpeg");
+            intent.putExtra(android.content.Intent.EXTRA_STREAM, contentUriFile);
+            startActivity(Intent.createChooser(intent, "Share Image"));
+        }
+        else
+        {
+            //This is a custom class I use to show dialogs...simply replace this with whatever you want to show an error message, Toast, etc.
+            Toast t = Toast.makeText(localization_history.this, "", Toast.LENGTH_SHORT);
+            t.show();
         }
     }
 }
