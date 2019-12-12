@@ -8,7 +8,10 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autoFocus" />
     <uses-feature android:name="android.hardware.location.gps" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,8 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".ActivityEditPassword"
-            android:theme="@style/TitleBarActivity"></activity>
+
         <activity
             android:name=".EntryActivity"
             android:noHistory="true"
@@ -33,6 +35,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".CameraMain"
+            android:noHistory="true"
+            android:theme="@style/SplashTheme">
+
+
+        </activity>
+
+
         <activity
             android:name="parents_area.parents_area_main"
             android:label="Parents Area"
@@ -40,8 +52,13 @@
         <activity
             android:name="bd_related.ActivitySetPassword"
             android:label="@string/app_title"
-            android:noHistory="true"
             android:theme="@style/ActionBarTheme" />
+        <activity
+            android:name="custom_folder.CustomFolder"
+            android:label="Home > Custom Folder"
+            android:theme="@style/TitleBarActivity">
+
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -60,7 +77,7 @@
             android:theme="@style/TitleBarActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme"></activity>
+            android:theme="@style/SplashTheme" />
     </application>
 
 </manifest>
