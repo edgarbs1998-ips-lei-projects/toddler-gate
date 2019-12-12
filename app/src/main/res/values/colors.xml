@@ -4,4 +4,5 @@
     <color name="colorBlueDark">#03567D</color>
     <color name="colorBlueLight">#0288D1</color>
     <color name="colorOrange">#FF813D</color>
+    <color name="colorBlack">#00000000</color>
 </resources>

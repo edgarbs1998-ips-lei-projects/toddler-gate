@@ -2,22 +2,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <TextView
+    <!--<TextView
         android:id="@+id/locinfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
+
     <fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
+        android:id="@+id/map_locatization_history"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="509dp"
         tools:context=".MainActivity" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/map_bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/colorOrange"
+        android:minHeight="200dp"
+        app:itemIconTint="@color/colorBlueDark"
+        app:itemTextColor="@color/colorWhite"
+        app:menu="@menu/location_menu" />
 </LinearLayout>
