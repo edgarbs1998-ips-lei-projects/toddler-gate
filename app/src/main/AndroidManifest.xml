@@ -30,14 +30,15 @@
             android:name=".EntryActivity"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
-            android:name=".CameraMain"
-            android:noHistory="true"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CameraMain"
+            android:noHistory="true" />
         <activity
             android:name="parents_area.parents_area_main"
             android:label="Parents Area"
