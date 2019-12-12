@@ -24,16 +24,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".EntryActivity" />
+
         <activity
-            android:name=".CameraMain"
+            android:name=".EntryActivity"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-        </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".CameraMain"
+            android:noHistory="true"
+            android:theme="@style/SplashTheme">
+
+
+        </activity>
+
                 <category android:name="android.intent.category.LAUNCHER" />
         <activity
             android:name="parents_area.parents_area_main"
@@ -43,7 +53,6 @@
             android:name="bd_related.ActivitySetPassword"
             android:label="@string/app_title"
             android:theme="@style/ActionBarTheme" />
-        <activity android:name="bd_related.NewPassword" />
         <activity
             android:name="custom_folder.CustomFolder"
             android:label="Home > Custom Folder"
