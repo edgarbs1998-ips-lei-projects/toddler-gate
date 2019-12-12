@@ -95,6 +95,7 @@ public class ActivitySetPassword extends AppCompatActivity {
                                 boolean isInserted = myDB.insertData(newConfPW);
                                 if(isInserted) {
                                     Toast.makeText(ActivitySetPassword.this, "Password Inserted!", Toast.LENGTH_SHORT).show();
+                                    finish();
                                     startActivity(new Intent(ActivitySetPassword.this, MainActivity.class));
                                 }else {
                                     Toast.makeText(ActivitySetPassword.this, "Password Not Inserted!", Toast.LENGTH_SHORT).show();
