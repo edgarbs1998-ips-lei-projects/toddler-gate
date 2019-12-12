@@ -44,7 +44,7 @@
 
         </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+
         <activity
             android:name="parents_area.parents_area_main"
             android:label="Parents Area"
