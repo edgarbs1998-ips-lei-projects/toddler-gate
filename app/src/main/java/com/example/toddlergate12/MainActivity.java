@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 
 import bd_related.DataBaseHelper;
@@ -25,17 +26,21 @@ import static bd_related.ActivitySetPassword.PASSWORD_PATTERN;
 
 public class MainActivity extends AppCompatActivity {
 
-    /*
+
     ViewPager vp;
     PagerAdapter adapter;
-    */
+
     ImageView imageView_Close;
     ImageView imageView_Options;
 
-    Dialog dialog;
+    Dialog dialogExitModal, dialogManagePWModal;
     EditText editText_PasswordExitModal;
     String pwExitModal;
     Button btExitModal;
+
+    EditText editText_PasswordManagePW_Modal;
+    String  pwManagePWModal;
+    Button btManagePWModal;
 
 
     Context ctx = this;
@@ -57,13 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        dialog = new Dialog(this);
+        dialogExitModal = new Dialog(this);
+        dialogManagePWModal = new Dialog(this);
 
-        /*
+
         adapter=new PagerAdapter(this);
         vp = (ViewPager)findViewById(R.id.myViewPager);
         vp.setAdapter(adapter);
-        */
+
 
         imageView_Close = (ImageView)findViewById(R.id.imageView_Close_Icon);
         imageView_Close.setOnClickListener(new View.OnClickListener() {
@@ -88,22 +94,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ShowEditPWModal(){
-        dialog.setContentView(R.layout.custom_managepw_modal);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
+        dialogManagePWModal.setContentView(R.layout.custom_managepw_modal);
+
+        btManagePWModal = (Button) dialogManagePWModal.findViewById(R.id.bt_ManagePWModal);
+        editText_PasswordManagePW_Modal = (EditText) dialogManagePWModal.findViewById(R.id.editText_PasswordManagePW_Modal);
+
+        btManagePWModal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("modal", "------------------Carreguei no botao para editar password ---------------");
+                DataBaseHelper myDB = new DataBaseHelper(ctx);
+
+                pwManagePWModal = editText_PasswordManagePW_Modal.getText().toString();
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        MainActivity.this);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                if(!pwManagePWModal.isEmpty() && PASSWORD_PATTERN.matcher(pwManagePWModal).matches()){
+                    Cursor cursor = myDB.getAllData();
+                    cursor.moveToFirst();
+                    if(pwManagePWModal.equals(cursor.getString(1))){
+                        dialogManagePWModal.dismiss();
+                        startActivity(new Intent(MainActivity.this, ActivityEditPassword.class));
+                    }else{
+                        // set message
+                        alertDialog.setMessage("Password incorreta");
+                        // show it
+                        alertDialog.show();
+                    }
+                }else{
+                    // set message
+                    alertDialog.setMessage("Password inválida");
+                    // show it
+                    alertDialog.show();
+                }
+
+            }
+        });
+
+        dialogManagePWModal.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogManagePWModal.show();
     }
 
 
     public void ShowExitModal(){
-        dialog.setContentView(R.layout.custom_exit_modal);
-        btExitModal = (Button) dialog.findViewById(R.id.bt_ExitModal);
-        editText_PasswordExitModal = (EditText) dialog.findViewById(R.id.editText_PasswordExitModal);
+        dialogExitModal.setContentView(R.layout.custom_exit_modal);
+        btExitModal = (Button) dialogExitModal.findViewById(R.id.bt_ExitModal);
+        editText_PasswordExitModal = (EditText) dialogExitModal.findViewById(R.id.editText_PasswordExit_Modal);
 
         btExitModal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("modal", "Carreguei no botao para sair");
                 DataBaseHelper myDB = new DataBaseHelper(ctx);
+
 
                 pwExitModal = editText_PasswordExitModal.getText().toString();
                 Log.e("modal", "------------- pwExitModal -> " + pwExitModal);
@@ -124,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
 
-                if(pwExitModal.isEmpty() || !PASSWORD_PATTERN.matcher(pwExitModal).matches()){
+                if(!pwExitModal.isEmpty() && PASSWORD_PATTERN.matcher(pwExitModal).matches()){
                     Log.e("bd", "------------ myDB.getAllData -> " + myDB.getAllData());
                     Log.e("bd", "------------ myDB.getAllData.count() -> " + myDB.getAllData().getCount());
 
@@ -142,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if(pwExitModal.equals(cursor.getString(1))){
 
-                        dialog.dismiss();
+                        dialogExitModal.dismiss();
                         Intent intent = new Intent(MainActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("EXIT", true);
@@ -171,8 +228,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
+        dialogExitModal.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogExitModal.show();
     }
 
     //botao de back no tlm
