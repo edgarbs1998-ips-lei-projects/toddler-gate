@@ -45,9 +45,14 @@
             android:theme="@style/TitleBarActivity" />
         <activity
             android:name="bd_related.ActivitySetPassword"
+        <activity
+            android:name="custom_folder.CustomFolder"
+            android:label="Home > Custom Folder"
+            android:theme="@style/TitleBarActivity">
+        </activity>
             android:label="@string/app_title"
-            android:noHistory="true"
             android:theme="@style/ActionBarTheme" />
+        <activity android:name="bd_related.NewPassword" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
