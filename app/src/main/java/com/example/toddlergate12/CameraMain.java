@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callback2 {
 
@@ -64,14 +66,11 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
             
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
-                /*Intent intent = new Intent(scope, ShowCaptureActivity.class);
-                intent.putExtra("capture", data);
-                startActivity(intent);*/
-
                 if (data != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
 
-                    if(bitmap!=null){
+                    Bitmap rotateBitmap = rotate(bitmap);
+                    if(rotateBitmap != null){
 
                         File filedir=new File(
                                 Environment
@@ -83,15 +82,16 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                        // filedir=new File(getBaseContext().getFilesDir()+"/dirr",System.currentTimeMillis()+".jpg");
 
                         File file = new File(filedir, System.currentTimeMillis()+".jpg");
-                        Log.d("PHOTOPATH", filedir.getPath());
 
                         try
                         {
                             FileOutputStream fileOutputStream=new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG,100, fileOutputStream);
+                            rotateBitmap.compress(Bitmap.CompressFormat.JPEG,100, fileOutputStream);
 
                             fileOutputStream.flush();
                             fileOutputStream.close();
+                            Toast toast = Toast.makeText(getApplicationContext(),"Photo taken",Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                         catch(IOException e){
                             e.printStackTrace();
@@ -114,6 +114,15 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
         });
     }
 
+    private Bitmap rotate(Bitmap bitmap) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+    }
+
     private void captureImage() {
         camera.takePicture(null, null, jpegCallback);
     }
@@ -127,6 +136,17 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
         camera.setDisplayOrientation(90);
         parameters.setPreviewFrameRate(30);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
+        Camera.Size bestSize = null;
+        List<Camera.Size> sizeList = camera.getParameters().getSupportedPreviewSizes();
+        bestSize = sizeList.get(0);
+        for(int i = 0; i < sizeList.size(); i++){
+            if((sizeList.get(i).width * sizeList.get(i).height) > (bestSize.width * bestSize.height)){
+                bestSize = sizeList.get(i);
+            }
+
+        }
+        parameters.setPreviewSize(bestSize.width, bestSize.height);
         camera.setParameters(parameters);
         try {
             camera.setPreviewDisplay(holder);
