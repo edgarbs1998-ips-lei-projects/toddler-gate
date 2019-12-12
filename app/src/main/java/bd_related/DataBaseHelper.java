@@ -1,42 +1,52 @@
 package bd_related;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
-    public DataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
-        super(context, name, factory, version);
+
+    public static final String DATABASE_NAME = "pw.db";
+    public static final String TABLE_NAME = "password_table";
+    public static final String COL_1 = "ID";
+    public static final String COL_2 = "PASSWORD";
+
+    public DataBaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, 1);
+
     }
 
-
-    //Called when no database exists in disk and the helper class needs
-    //to create a new one.
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("LOG BD","----------- COMECEI A CRIAR A TABELA ----------");
-        try{
-
-            db.execSQL(Password.DATABASE_CREATE);
-            Log.d("LOG BD","------------ ACABEI DE CRIAR A TABELA ----------");
-        }catch(Exception e){
-            Log.e("Error", "exception");
-        }
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PASSWORD TEXT)");
     }
 
-
-    //Called when there is a database version mismatch meaning that the version
-    // of the database on disk needs to be upgraded to the current version.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //Upgrade the existing database to conform to the new version. Multiple
-        //previous versions can be handled by comparing _oldVersion and _newVersion values.
-        //The simplest case is to drop the old table and create a new one.
-        if(oldVersion != newVersion){
-            db.execSQL("DROP TABLE IF EXISTS " + Password.TABLE_PASSWORDS);
-            //Create a new one
-            onCreate(db);
-        }
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
+
+    public boolean insertData(String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, password);
+        long result = db.insert(TABLE_NAME,null, contentValues);
+        if(result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public Cursor getAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
+        Log.e("EA", "---------- res -> " + res.toString());
+        return res;
     }
 }

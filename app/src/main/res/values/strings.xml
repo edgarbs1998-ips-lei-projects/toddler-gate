@@ -111,4 +111,5 @@
 
     <string name="search_hint">Search Fruit</string>
     <string name="search_title">Enter search</string>
+    <string name="title_activity_show_capture">ShowCaptureActivity</string>
 </resources>
