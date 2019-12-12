@@ -7,14 +7,20 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callback2 {
@@ -25,7 +31,11 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     SurfaceHolder csurfaceHolder;
     ImageView imageCapture;
     final int CAMERA_REQUEST = 1;
+    final int FILE_PERMISSION = 0;
     CameraMain scope = this;
+    // Gallery directory name to store the images or videos
+    public static final String GALLERY_DIRECTORY_NAME = "Toddler-Gate-CustomFolder";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,12 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
         if(ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
+            if(ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, FILE_PERMISSION);
+            }else{
+                csurfaceHolder.addCallback(this);
+                csurfaceHolder.setFormat(csurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+            }
         }else{
             csurfaceHolder.addCallback(this);
             csurfaceHolder.setFormat(csurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -48,9 +64,45 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
             
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
-                Intent intent = new Intent(scope, ShowCaptureActivity.class);
+                /*Intent intent = new Intent(scope, ShowCaptureActivity.class);
                 intent.putExtra("capture", data);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                if (data != null) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
+
+                    if(bitmap!=null){
+
+                        File filedir=new File(
+                                Environment
+                                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), GALLERY_DIRECTORY_NAME);
+                        if(!filedir.isDirectory()){
+                            filedir.mkdir();
+                        }
+
+                       // filedir=new File(getBaseContext().getFilesDir()+"/dirr",System.currentTimeMillis()+".jpg");
+
+                        File file = new File(filedir, System.currentTimeMillis()+".jpg");
+                        Log.d("PHOTOPATH", filedir.getPath());
+
+                        try
+                        {
+                            FileOutputStream fileOutputStream=new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG,100, fileOutputStream);
+
+                            fileOutputStream.flush();
+                            fileOutputStream.close();
+                        }
+                        catch(IOException e){
+                            e.printStackTrace();
+                        }
+                        catch(Exception exception)
+                        {
+                            exception.printStackTrace();
+                        }
+
+                    }
+                }
             }
         };
 
