@@ -50,5 +50,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public boolean updateData(String id, String password){
+        Log.e("bot nav","-------------  entrei no updataData -------------");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, password);
+        db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
+        Log.e("bot nav","-------------  sair do updataData -------------");
+        return true;
+    }
+
 
 }

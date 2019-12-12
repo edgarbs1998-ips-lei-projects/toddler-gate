@@ -21,12 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".ActivityEditPassword"
+            android:theme="@style/TitleBarActivity"></activity>
         <activity
             android:name=".EntryActivity"
-            android:theme="@style/SplashTheme"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,8 +40,8 @@
         <activity
             android:name="bd_related.ActivitySetPassword"
             android:label="@string/app_title"
-            android:theme="@style/ActionBarTheme"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:theme="@style/ActionBarTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -54,11 +57,10 @@
         <activity
             android:name="parents_area.localization_history"
             android:label="@string/parents_area_menu_location"
-            android:theme="@style/TitleBarActivity"></activity>
+            android:theme="@style/TitleBarActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
-            </activity>
+            android:theme="@style/SplashTheme"></activity>
     </application>
 
 </manifest>

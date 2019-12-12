@@ -2,12 +2,12 @@ package com.example.toddlergate12;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import bd_related.ActivitySetPassword;
 import bd_related.DataBaseHelper;
+
+import static bd_related.ActivitySetPassword.PASSWORD_PATTERN;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,21 +80,24 @@ public class MainActivity extends AppCompatActivity {
         imageView_Options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivitySetPassword.class));
+                //startActivity(new Intent(MainActivity.this, ActivityEditPassword.class));
+                Log.e("modal", "--------------------CARREGUEI NO BOTAO PARA A BRIR O MODAL --------------------");
+                ShowEditPWModal();
             }
         });
     }
 
+    public void ShowEditPWModal(){
+        dialog.setContentView(R.layout.custom_managepw_modal);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
 
     public void ShowExitModal(){
-        dialog.setContentView(R.layout.custom_modal);
+        dialog.setContentView(R.layout.custom_exit_modal);
         btExitModal = (Button) dialog.findViewById(R.id.bt_ExitModal);
         editText_PasswordExitModal = (EditText) dialog.findViewById(R.id.editText_PasswordExitModal);
-
-
-
-
-        //Log.e("modal", "--------------------suposta pw -> " + res.getString(1));
 
         btExitModal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,17 +108,35 @@ public class MainActivity extends AppCompatActivity {
                 pwExitModal = editText_PasswordExitModal.getText().toString();
                 Log.e("modal", "------------- pwExitModal -> " + pwExitModal);
 
-                Log.e("bd", "------------ myDB.getAllData -> " + myDB.getAllData());
-                Log.e("bd", "------------ myDB.getAllData.count() -> " + myDB.getAllData().getCount());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        MainActivity.this);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                if(pwExitModal.isEmpty() || !PASSWORD_PATTERN.matcher(pwExitModal).matches()){
+                    Log.e("bd", "------------ myDB.getAllData -> " + myDB.getAllData());
+                    Log.e("bd", "------------ myDB.getAllData.count() -> " + myDB.getAllData().getCount());
 
 
 
-                Cursor cursor = myDB.getAllData();
-                cursor.moveToFirst();
-                Log.e("bd","------------------- cursor.getString(1) -> " + cursor.getString(1));
-                //boolean status = false;
-                //String pw = "";
-                //while (cursor.moveToNext()){
+                    Cursor cursor = myDB.getAllData();
+                    cursor.moveToFirst();
+                    Log.e("bd","------------------- cursor.getString(0) -> " + cursor.getString(0));
+                    Log.e("bd","------------------- cursor.getString(1) -> " + cursor.getString(1));
+                    //boolean status = false;
+                    //String pw = "";
+                    //while (cursor.moveToNext()){
 
 
 
@@ -124,7 +147,22 @@ public class MainActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("EXIT", true);
                         startActivity(intent);
+                    }else{
+                        // set message
+                        alertDialog.setMessage("Password incorreta");
+                        // show it
+                        alertDialog.show();
                     }
+                }else{
+
+                    // set message
+                    alertDialog.setMessage("Password inválida");
+                    // show it
+                    alertDialog.show();
+
+                }
+
+
 
 
 
