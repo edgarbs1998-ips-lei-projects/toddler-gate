@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.toddlergate12.MainActivity;
 import com.example.toddlergate12.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,17 +59,19 @@ public class localization_history extends FragmentActivity implements OnMapReady
     BottomNavigationView bottomNav;
     View mapView;
 
-    // Storage Permissions
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
+    // Permissions
+    private static final int REQUEST_ACCESS_FINE_LOCATION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        verifyStoragePermissions(this);
+
+        if (getIntent().getBooleanExtra("BACKGROUND", false)) {
+            Intent intent = new Intent(parents_area.localization_history.this, MainActivity.class);
+            intent.putExtra("backgroundMap", false);
+            startActivity(intent);
+        }
+
         setContentView(R.layout.activity_localization_history);
         bottomNav =  findViewById(R.id.map_bottom_nav);
         mapView  = findViewById(R.id.map_locatization_history);
@@ -108,7 +111,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
                                 try
                                 {
                                     fout = openFileOutput(filePath,
-                                            MODE_WORLD_READABLE);
+                                            MODE_PRIVATE);
 
                                     // Write the string to the file
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
@@ -143,24 +146,49 @@ public class localization_history extends FragmentActivity implements OnMapReady
         mapFragment.getMapAsync(this);
     }
 
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        switch (requestCode) {
+//            case ACCESS_FINE_LOCATION_REQUEST:
+//                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    csurfaceHolder.addCallback(this);
+//                    csurfaceHolder.setFormat(csurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//                }
+//                break;
+//        }
+//
+//        System.out.println(permissions[0]);
+//        if (permissions.length == 1 && permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//                    ActivityCompat.checkSelfPermission(this,
+//                            android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+//                            PackageManager.PERMISSION_GRANTED) {
+//                // TODO: Consider callingActivityCompat#requestPermissions here to request the missing
+//                //permissions, and then overriding
+//                // public void onRequestPermissionsResult(intrequestCode, String[] permissions, int[] grantResults)
+//                // to handle the case where the user grants thepermission. See the documentation
+//                // for ActivityCompat#requestPermissions for moredetails.
+//                return;
+//            }
+//            mMap.setMyLocationEnabled(true);
+//        } else {
+//            // Permission was denied. Display an error message.
+//        }
+//    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        System.out.println(permissions[0]);
-        if (permissions.length == 1 && permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this,
-                            android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider callingActivityCompat#requestPermissions here to request the missing
-                //permissions, and then overriding
-                // public void onRequestPermissionsResult(intrequestCode, String[] permissions, int[] grantResults)
-                // to handle the case where the user grants thepermission. See the documentation
-                // for ActivityCompat#requestPermissions for moredetails.
-                return;
+        switch (requestCode) {
+            case REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    prepareMap();
+                } else {
+                    Toast.makeText(getApplicationContext(), "The application has no access to device location", Toast.LENGTH_SHORT).show();
+                }
+                break;
             }
-            mMap.setMyLocationEnabled(true);
-        } else {
-            // Permission was denied. Display an error message.
         }
     }
 
@@ -262,15 +290,18 @@ public class localization_history extends FragmentActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            prepareMap();
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    android.Manifest.permission.ACCESS_FINE_LOCATION
-            }, 1);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_ACCESS_FINE_LOCATION);
         }
+
+    }
+
+    public void prepareMap() {
+        mMap.setMyLocationEnabled(true);
         LocationManager locationManager;
         String serviceName = Context.LOCATION_SERVICE;
         locationManager = (LocationManager)
@@ -307,20 +338,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
 
         } catch (SecurityException e) {
             Log.e(TAG, e.getMessage());
-        }
-    }
-
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
         }
     }
 

@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         if (getIntent().getBooleanExtra("EXIT", false)) {
+            finishAffinity();
             finish();
         }
 
@@ -60,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        if (getIntent().getBooleanExtra("backgroundMap", true)) {
+            Intent intent = new Intent(MainActivity.this, parents_area.localization_history.class);
+            intent.putExtra("BACKGROUND", true);
+            startActivity(intent);
+        }
 
 
 
