@@ -40,7 +40,7 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     // Gallery directory name to store the images or videos
     public static final String GALLERY_DIRECTORY_NAME = "Toddler-Gate-CustomFolder";
 
-    int gallery_grid_Images[]={R.drawable.frame_1, R.drawable.frame_2};
+    int gallery_grid_Images[]={R.drawable.frame_1, R.drawable.frame_2, R.drawable.frame_3};
     ViewFlipper viewFlipper;
 
 
