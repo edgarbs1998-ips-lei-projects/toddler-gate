@@ -1,6 +1,5 @@
 package com.example.toddlergate12;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -37,21 +36,19 @@ public class EntryActivity extends AppCompatActivity {
         startActivity(launchIntent);
 
         finish();
-
-
     }
 
     private String getScreenClassName(){
         Cursor res = myDB.getAllData();
         String activity;
-        if(res.getCount() == 0){
+        if (res.getCount() == 0) {
 
             //startActivity(new Intent(this, ActivitySetPassword.class));
 
             activity = ActivitySetPassword.class.getName();
             return activity;
 
-        }else{
+        } else {
             //startActivity(new Intent(this, MainActivity.class));
             activity = MainActivity.class.getName();
             return activity;

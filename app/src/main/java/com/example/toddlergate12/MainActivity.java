@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     ViewPager vp;
     PagerAdapter adapter;
-
+    */
+    ConstraintLayout button_piano;
     ImageView imageView_Close;
     ImageView imageView_Options;
 
@@ -70,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
         vp = (ViewPager)findViewById(R.id.myViewPager);
         vp.setAdapter(adapter);
 
+        button_piano = (ConstraintLayout)findViewById(R.id.button_piano);
+        button_piano.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PianoActivity.class));
+            }
+        });
 
         imageView_Close = (ImageView)findViewById(R.id.imageView_Close_Icon);
         imageView_Close.setOnClickListener(new View.OnClickListener() {
