@@ -31,30 +31,17 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-
         LayoutInflater inflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.view_pager_layout,container,false);
-        ImageView iv = (ImageView)v.findViewById(R.id.imageView_ViewPager);
+        ImageView iv = v.findViewById(R.id.imageView_ViewPager);
         iv.setImageResource(images[position]);
         container.addView(v);
         return v;
-
-
-
     }
 
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        //container.removeView((View) object);
-        /*
-        ((ImageView)object).setImageResource(0);
-        BitmapDrawable bmd = (BitmapDrawable) ((ImageView) object).getDrawable();
-        if (bmd != null) bmd.getBitmap().recycle();
-        View view = (View)object;
-        ((ViewPager) container).removeView(view);
-        view = null;
-        */
         View view = (View)object;
         ((ViewPager) container).removeView(view);
         view = null;

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 
 import bd_related.ActivitySetPassword;
 import bd_related.DataBaseHelper;
@@ -17,12 +16,8 @@ public class EntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         myDB = new DataBaseHelper(this);
 
-        //setContentView(R.layout.activity_entry);
-
-        //launch a different activity
         Intent launchIntent = new Intent();
         Class<?> launchActivity;
         try{
@@ -42,14 +37,9 @@ public class EntryActivity extends AppCompatActivity {
         Cursor res = myDB.getAllData();
         String activity;
         if (res.getCount() == 0) {
-
-            //startActivity(new Intent(this, ActivitySetPassword.class));
-
             activity = ActivitySetPassword.class.getName();
             return activity;
-
         } else {
-            //startActivity(new Intent(this, MainActivity.class));
             activity = MainActivity.class.getName();
             return activity;
         }

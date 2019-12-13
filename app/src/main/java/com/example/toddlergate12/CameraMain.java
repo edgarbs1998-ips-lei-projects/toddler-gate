@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +13,6 @@ import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -42,7 +40,6 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
 
     int gallery_grid_Images[]={R.drawable.frame_1, R.drawable.frame_2, R.drawable.frame_3};
     ViewFlipper viewFlipper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +90,6 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                         if(!filedir.isDirectory()){
                             filedir.mkdir();
                         }
-
                         File file = new File(filedir, System.currentTimeMillis()+".jpg");
 
                         try
@@ -113,12 +109,10 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                         {
                             exception.printStackTrace();
                         }
-
                     }
                 }
             }
         };
-
         imageCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +129,6 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
     private void setFlipperImage(int res) {
-        Log.i("Set Filpper Called", res+"");
         ImageView image = new ImageView(getApplicationContext());
         image.setBackgroundResource(res);
         image.setTag(res);

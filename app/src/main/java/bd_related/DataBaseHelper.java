@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -18,7 +15,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-
     }
 
     @Override
@@ -51,14 +47,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean updateData(String id, String password){
-        Log.e("bot nav","-------------  entrei no updataData -------------");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, password);
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
-        Log.e("bot nav","-------------  sair do updataData -------------");
         return true;
     }
-
-
 }

@@ -5,8 +5,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -92,7 +90,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
                         {
                             line.remove();
                         }
-
                         polylines.clear();
                         break;
                     case R.id.navigation_screenshot:
@@ -120,15 +117,11 @@ public class localization_history extends FragmentActivity implements OnMapReady
                                 }
                                 catch (FileNotFoundException e)
                                 {
-                                    // TODO Auto-generated catch block
-                                    Log.d("ImageCapture", "FileNotFoundException");
                                     Log.d("ImageCapture", e.getMessage());
                                     filePath = "";
                                 }
                                 catch (IOException e)
                                 {
-                                    // TODO Auto-generated catch block
-                                    Log.d("ImageCapture", "IOException");
                                     Log.d("ImageCapture", e.getMessage());
                                     filePath = "";
                                 }
@@ -145,38 +138,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
         });
         mapFragment.getMapAsync(this);
     }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//
-//        switch (requestCode) {
-//            case ACCESS_FINE_LOCATION_REQUEST:
-//                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                    csurfaceHolder.addCallback(this);
-//                    csurfaceHolder.setFormat(csurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-//                }
-//                break;
-//        }
-//
-//        System.out.println(permissions[0]);
-//        if (permissions.length == 1 && permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//                    ActivityCompat.checkSelfPermission(this,
-//                            android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-//                            PackageManager.PERMISSION_GRANTED) {
-//                // TODO: Consider callingActivityCompat#requestPermissions here to request the missing
-//                //permissions, and then overriding
-//                // public void onRequestPermissionsResult(intrequestCode, String[] permissions, int[] grantResults)
-//                // to handle the case where the user grants thepermission. See the documentation
-//                // for ActivityCompat#requestPermissions for moredetails.
-//                return;
-//            }
-//            mMap.setMyLocationEnabled(true);
-//        } else {
-//            // Permission was denied. Display an error message.
-//        }
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -203,8 +164,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
     }
 
     private void updateWithNewLocation(Location location) {
-        //TextView myLocationText;
-        //myLocationText = (TextView) findViewById(R.id.locinfo);
         String latLongString = "No location found";
         String addressString = "No address found";
         if (location != null) { //update the map_locatization_history location
@@ -222,7 +181,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
 
             Geocoder gc = new Geocoder(this, Locale.getDefault());
             if (!Geocoder.isPresent()) {
-                addressString = "No geocoder available";
+                Log.e("Location", "Geocoder not present");
             } else {
                 try {
                     List<Address> addresses =
@@ -251,7 +210,6 @@ public class localization_history extends FragmentActivity implements OnMapReady
                 }
             }
         } else Log.e(TAG, "Invalid Location");
-        //myLocationText.setText("Your current Position is:\n" + latLongString + "\n\n" + addressString);
     }
 
     private final LocationListener locationListener = new
@@ -330,7 +288,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
                 locationManager.requestLocationUpdates(provider, 2000, 10,
                         locationListener);
             } else {
-                String bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
+                String bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
 
                 //This is what you need:
                 locationManager.requestLocationUpdates(bestProvider, 1000, 0, locationListener);
@@ -360,8 +318,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
         else
         {
             //This is a custom class I use to show dialogs...simply replace this with whatever you want to show an error message, Toast, etc.
-            Toast t = Toast.makeText(localization_history.this, "", Toast.LENGTH_SHORT);
-            t.show();
+            Toast.makeText(localization_history.this, "", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -37,7 +37,6 @@ public class PianoActivity extends AppCompatActivity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         openReactView();
     }
 
@@ -49,7 +48,6 @@ public class PianoActivity extends AppCompatActivity {
                 Toast.makeText(this, "Overlay permission denied", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             openReactView();
         }
     }

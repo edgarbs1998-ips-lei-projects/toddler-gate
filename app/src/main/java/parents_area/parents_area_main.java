@@ -62,11 +62,6 @@ public class parents_area_main extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
 
             case R.id.layout_location:
-               /*     // set message
-                alertDialog.setMessage("Location Button Clicked");
-                // show it
-                alertDialog.show();*/
-
                 startActivity(new Intent(parents_area_main.this, localization_history.class));
                 break;
 
@@ -89,10 +84,8 @@ public class parents_area_main extends AppCompatActivity implements View.OnClick
                 // show it
                 alertDialog.show();
                 break;
-
             default:
                 break;
         }
     }
-
 }
