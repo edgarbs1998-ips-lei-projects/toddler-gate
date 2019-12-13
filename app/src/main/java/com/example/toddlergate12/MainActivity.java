@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     PagerAdapter adapter;
 
     ConstraintLayout button_piano;
+    ImageView imageView_Camera;
     ImageView imageView_Close;
     ImageView imageView_Options;
 
@@ -77,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, PianoActivity.class));
+            }
+        });
+
+        imageView_Camera = (ImageView)findViewById(R.id.imageView_Camera);
+        imageView_Camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CameraMain.class));
             }
         });
 
@@ -137,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     cursor.moveToFirst();
                     if(pwManagePWModal.equals(cursor.getString(1))){
                         dialogManagePWModal.dismiss();
-                        startActivity(new Intent(MainActivity.this, ActivityEditPassword.class));
+                        startActivity(new Intent(MainActivity.this, parents_area.parents_area_main.class));
                     }else{
                         // set message
                         alertDialog.setMessage("Password incorreta");

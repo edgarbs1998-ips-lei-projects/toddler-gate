@@ -335,6 +335,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:tint="@color/colorOrange"
                     app:srcCompat="@drawable/icon_piano" />
 
                 <TextView
@@ -359,12 +360,13 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView_Camera"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:tint="@color/colorOrange"
                     app:srcCompat="@drawable/icon_camera" />
 
                 <TextView
@@ -378,7 +380,7 @@
                     android:textColor="#000000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView_Camera" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.toddlergate12.ActivityEditPassword;
 import com.example.toddlergate12.R;
 
 public class parents_area_main extends AppCompatActivity implements View.OnClickListener
@@ -74,6 +75,7 @@ public class parents_area_main extends AppCompatActivity implements View.OnClick
                 alertDialog.setMessage("bd_related.Password Button Clicked");
                 // show it
                 alertDialog.show();
+                startActivity(new Intent(parents_area_main.this, ActivityEditPassword.class));
                 break;
 
             case R.id.layout_profiles:
