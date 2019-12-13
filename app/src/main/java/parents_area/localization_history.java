@@ -108,7 +108,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
                                 try
                                 {
                                     fout = openFileOutput(filePath,
-                                            MODE_PRIVATE);
+                                            MODE_WORLD_READABLE);
 
                                     // Write the string to the file
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);

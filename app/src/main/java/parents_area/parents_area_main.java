@@ -66,10 +66,6 @@ public class parents_area_main extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.layout_password:
-                //set message
-                alertDialog.setMessage("bd_related.Password Button Clicked");
-                // show it
-                alertDialog.show();
                 startActivity(new Intent(parents_area_main.this, ActivityEditPassword.class));
                 break;
 

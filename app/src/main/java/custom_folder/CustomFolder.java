@@ -104,12 +104,11 @@ public class CustomFolder extends AppCompatActivity {
         int[] to = {
           R.id.listview_images, R.id.Description
         };
-        String customFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath();
-        Log.d("Files", "Path: " + customFolderPath);
+        String customFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath() + "/Screenshots";
         File directory = new File(customFolderPath);
         File [] folderfiles = directory.listFiles();
 
-        if(folderfiles != null) {
+        if(folderfiles[0].getPath() != null) {
             Arrays.sort(folderfiles, new Comparator<File>() {
                 @Override
                 public int compare(File file1, File file2) {
@@ -174,7 +173,6 @@ public class CustomFolder extends AppCompatActivity {
     {
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
-
         if (extension != null) {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase());
         }

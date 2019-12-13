@@ -85,8 +85,7 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                     if(bitmap != null){
 
                         File filedir=new File(
-                                Environment
-                                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), GALLERY_DIRECTORY_NAME);
+                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath() + "/Screenshots");
                         if(!filedir.isDirectory()){
                             filedir.mkdir();
                         }
