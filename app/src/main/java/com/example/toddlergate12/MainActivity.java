@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         if (getIntent().getBooleanExtra("EXIT", false)) {
+            finishAffinity();
             finish();
         }
 
@@ -61,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        if (getIntent().getBooleanExtra("backgroundMap", true)) {
+            Intent intent = new Intent(MainActivity.this, parents_area.localization_history.class);
+            intent.putExtra("BACKGROUND", true);
+            startActivity(intent);
+        }
 
 
 
@@ -245,14 +251,13 @@ public class MainActivity extends AppCompatActivity {
     //botao de back no tlm
     @Override
     public void onBackPressed(){
-        Toast toast = Toast.makeText(this, "BabyDog GOAT", Toast.LENGTH_SHORT);
-        toast.show();
+        ShowExitModal();
     }
-    //reconhece ao carregar os 3 botoes do tlm
-    @Override
-    protected void onUserLeaveHint(){
-        Toast.makeText(getApplicationContext(), "BabyDog not GOAT", Toast.LENGTH_SHORT).show();
-        super.onUserLeaveHint();
-    }
+//    //reconhece ao carregar os 3 botoes do tlm
+//    @Override
+//    protected void onUserLeaveHint(){
+//        Toast.makeText(getApplicationContext(), "BabyDog not GOAT", Toast.LENGTH_SHORT).show();
+//        super.onUserLeaveHint();
+//    }
 
 }

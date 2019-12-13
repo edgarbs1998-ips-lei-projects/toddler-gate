@@ -207,6 +207,7 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                     csurfaceHolder.addCallback(this);
                     csurfaceHolder.setFormat(csurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
                 }
+                break;
         }
     }
 }

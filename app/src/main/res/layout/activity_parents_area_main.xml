@@ -10,8 +10,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_location"
-        android:layout_width="409dp"
-        android:layout_height="130dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="1dp"
         android:background="@color/colorBlueDark"
         app:layout_constraintBottom_toTopOf="@+id/layout_password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +39,6 @@
             android:layout_width="71dp"
             android:layout_height="73dp"
             android:layout_marginStart="40dp"
-            android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,8 +48,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_password"
-        android:layout_width="409dp"
-        android:layout_height="130dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
         android:background="@color/colorBlueDark"
         app:layout_constraintBottom_toTopOf="@+id/layout_profiles"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,8 +85,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_profiles"
-        android:layout_width="409dp"
-        android:layout_height="130dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
         android:background="@color/colorBlueDark"
         app:layout_constraintBottom_toTopOf="@+id/layout_time_limits"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,8 +123,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_time_limits"
-        android:layout_width="409dp"
-        android:layout_height="130dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
         android:background="@color/colorBlueDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +151,6 @@
             android:layout_width="71dp"
             android:layout_height="73dp"
             android:layout_marginStart="40dp"
-            android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
