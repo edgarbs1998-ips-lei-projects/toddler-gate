@@ -10,9 +10,8 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/myViewPager"
-        android:layout_width="413dp"
-        android:layout_height="678dp"
-        android:layout_marginBottom="1dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,8 +62,8 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <TableLayout
-        android:layout_width="409dp"
-        android:layout_height="677dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="2dp"
         android:collapseColumns="4"
         android:paddingLeft="40dp"
@@ -126,7 +125,7 @@
                 android:layout_height="65dp"
                 app:srcCompat="@drawable/ic_stopwatch_icon" />
         </TableRow>-->
-<!--
+        <!--
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -161,7 +160,7 @@
                 android:textColor="@color/colorBlack" />
         </TableRow>
 -->
-       <!-- <TableRow
+        <!-- <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -326,16 +325,17 @@
                 android:id="@+id/button_piano"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#00000000"
                 android:paddingRight="10dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
+                    android:tint="@color/colorOrange"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:tint="@color/colorOrange"
                     app:srcCompat="@drawable/icon_piano" />
 
                 <TextView
@@ -345,7 +345,7 @@
                     android:width="70dp"
                     android:height="50dp"
                     android:gravity="center"
-                    android:text="TextView bruh"
+                    android:text="@string/apps_piano"
                     android:textColor="#000000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -363,10 +363,10 @@
                     android:id="@+id/imageView_Camera"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
+                    android:tint="@color/colorOrange"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:tint="@color/colorOrange"
                     app:srcCompat="@drawable/icon_camera" />
 
                 <TextView
@@ -376,7 +376,7 @@
                     android:width="70dp"
                     android:height="50dp"
                     android:gravity="center"
-                    android:text="TextView mano uiuiui"
+                    android:text="@string/apps_camera"
                     android:textColor="#000000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

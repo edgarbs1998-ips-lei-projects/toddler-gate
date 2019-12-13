@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -245,14 +244,13 @@ public class MainActivity extends AppCompatActivity {
     //botao de back no tlm
     @Override
     public void onBackPressed(){
-        Toast toast = Toast.makeText(this, "BabyDog GOAT", Toast.LENGTH_SHORT);
-        toast.show();
+        ShowExitModal();
     }
-    //reconhece ao carregar os 3 botoes do tlm
-    @Override
-    protected void onUserLeaveHint(){
-        Toast.makeText(getApplicationContext(), "BabyDog not GOAT", Toast.LENGTH_SHORT).show();
-        super.onUserLeaveHint();
-    }
+//    //reconhece ao carregar os 3 botoes do tlm
+//    @Override
+//    protected void onUserLeaveHint(){
+//        Toast.makeText(getApplicationContext(), "BabyDog not GOAT", Toast.LENGTH_SHORT).show();
+//        super.onUserLeaveHint();
+//    }
 
 }
