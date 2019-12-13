@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,6 +39,9 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     CameraMain scope = this;
     // Gallery directory name to store the images or videos
     public static final String GALLERY_DIRECTORY_NAME = "Toddler-Gate-CustomFolder";
+
+    int gallery_grid_Images[]={R.drawable.frame_1};
+    ViewFlipper viewFlipper;
 
 
     @Override
@@ -61,6 +66,12 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
             csurfaceHolder.setFormat(csurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         }
 
+        viewFlipper = (ViewFlipper) findViewById(R.id.flipper);
+        for(int i=0;i<gallery_grid_Images.length;i++)
+        {
+            //  This will create dynamic image view and add them to ViewFlipper
+            setFlipperImage(gallery_grid_Images[i]);
+        }
 
         jpegCallback = new Camera.PictureCallback(){
             
@@ -70,6 +81,10 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
 
                     Bitmap rotateBitmap = rotate(bitmap);
+                    Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.frame_1);
+                    overlay = Bitmap.createScaledBitmap(overlay, rotateBitmap.getWidth(), rotateBitmap.getHeight(), false);
+                    Canvas canvas = new Canvas(rotateBitmap);
+                    canvas.drawBitmap(overlay, new Matrix(), null);
                     if(rotateBitmap != null){
 
                         File filedir=new File(
@@ -78,8 +93,6 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                         if(!filedir.isDirectory()){
                             filedir.mkdir();
                         }
-
-                       // filedir=new File(getBaseContext().getFilesDir()+"/dirr",System.currentTimeMillis()+".jpg");
 
                         File file = new File(filedir, System.currentTimeMillis()+".jpg");
 
@@ -112,6 +125,20 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                 captureImage();
             }
         });
+
+        viewFlipper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewFlipper.showNext();
+            }
+        });
+    }
+
+    private void setFlipperImage(int res) {
+        Log.i("Set Filpper Called", res+"");
+        ImageView image = new ImageView(getApplicationContext());
+        image.setBackgroundResource(res);
+        viewFlipper.addView(image);
     }
 
     private Bitmap rotate(Bitmap bitmap) {

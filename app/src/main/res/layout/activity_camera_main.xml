@@ -14,10 +14,10 @@
 
     </SurfaceView>
 
-    <ImageView
-        android:id="@+id/frameImage"
+    <ViewFlipper android:id="@+id/flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+    </ViewFlipper>
 
     <ImageView
         android:id="@+id/captureImage"
