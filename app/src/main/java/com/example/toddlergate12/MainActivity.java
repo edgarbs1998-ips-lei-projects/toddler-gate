@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     ViewPager vp;
     PagerAdapter adapter;
-    */
+
     ConstraintLayout button_piano;
     ImageView imageView_Close;
     ImageView imageView_Options;
@@ -227,14 +227,6 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.show();
 
                 }
-
-
-
-
-
-
-
-
             }
         });
         dialogExitModal.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -253,7 +245,5 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "BabyDog not GOAT", Toast.LENGTH_SHORT).show();
         super.onUserLeaveHint();
     }
-
-
 
 }

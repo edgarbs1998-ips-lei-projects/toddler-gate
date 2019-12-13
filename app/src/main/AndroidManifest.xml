@@ -28,11 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".ActivityEditPassword"
-            android:theme="@style/TitleBarActivity"></activity>
+            android:theme="@style/TitleBarActivity"
+            android:screenOrientation="userPortrait"></activity>
         <activity
             android:name=".EntryActivity"
             android:noHistory="true"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,18 +43,21 @@
         </activity>
         <activity
             android:name=".CameraMain"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="userPortrait" />
         <activity
             android:name="parents_area.parents_area_main"
             android:label="Parents Area"
-            android:theme="@style/TitleBarActivity" />
+            android:theme="@style/TitleBarActivity"
+            android:screenOrientation="userPortrait" />
         <activity
-            android:name="bd_related.ActivitySetPassword"></activity>
+            android:name="bd_related.ActivitySetPassword"
+            android:screenOrientation="userPortrait" />
         <activity
             android:name="custom_folder.CustomFolder"
             android:label="Home > Custom Folder"
-            android:theme="@style/TitleBarActivity">
-        </activity>
+            android:theme="@style/TitleBarActivity"
+            android:screenOrientation="userPortrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -63,23 +68,24 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"
+            android:screenOrientation="userPortrait" />
 
         <activity
             android:name="parents_area.localization_history"
             android:label="@string/parents_area_menu_location"
-            android:theme="@style/TitleBarActivity" />
+            android:theme="@style/TitleBarActivity"
+            android:screenOrientation="userPortrait"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
-        </activity>
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="userPortrait" />
         <activity
             android:name="PianoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="userLandscape" />
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
 </manifest>
