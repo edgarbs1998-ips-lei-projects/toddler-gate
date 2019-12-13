@@ -151,13 +151,13 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, parents_area.parents_area_main.class));
                     }else{
                         // set message
-                        alertDialog.setMessage("Password incorreta");
+                        alertDialog.setMessage("Incorrect Password!");
                         // show it
                         alertDialog.show();
                     }
                 }else{
                     // set message
-                    alertDialog.setMessage("Password inválida");
+                    alertDialog.setMessage("Invalid Password!");
                     // show it
                     alertDialog.show();
                 }
@@ -206,13 +206,13 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }else{
                         // set message
-                        alertDialog.setMessage("Password incorreta");
+                        alertDialog.setMessage("Incorrect Password!");
                         // show it
                         alertDialog.show();
                     }
                 }else{
                     // set message
-                    alertDialog.setMessage("Password inválida");
+                    alertDialog.setMessage("Invalid Password!");
                     // show it
                     alertDialog.show();
                 }
