@@ -78,10 +78,10 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
                 if (data != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data.length);
 
                     bitmap = rotate(bitmap);
-                    Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.frame_2);
+                    Bitmap overlay = BitmapFactory.decodeResource(getResources(), (Integer) viewFlipper.getCurrentView().getTag());
                     overlay = Bitmap.createScaledBitmap(overlay, bitmap.getWidth(), bitmap.getHeight(), false);
                     Canvas canvas = new Canvas(bitmap);
                     canvas.drawBitmap(overlay, new Matrix(), null);
@@ -138,6 +138,7 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
         Log.i("Set Filpper Called", res+"");
         ImageView image = new ImageView(getApplicationContext());
         image.setBackgroundResource(res);
+        image.setTag(res);
         viewFlipper.addView(image);
     }
 
