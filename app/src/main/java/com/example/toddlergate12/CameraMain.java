@@ -40,7 +40,7 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     // Gallery directory name to store the images or videos
     public static final String GALLERY_DIRECTORY_NAME = "Toddler-Gate-CustomFolder";
 
-    int gallery_grid_Images[]={R.drawable.frame_1};
+    int gallery_grid_Images[]={R.drawable.frame_1, R.drawable.frame_2};
     ViewFlipper viewFlipper;
 
 
@@ -80,12 +80,12 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                 if (data != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
 
-                    Bitmap rotateBitmap = rotate(bitmap);
-                    Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.frame_1);
-                    overlay = Bitmap.createScaledBitmap(overlay, rotateBitmap.getWidth(), rotateBitmap.getHeight(), false);
-                    Canvas canvas = new Canvas(rotateBitmap);
+                    bitmap = rotate(bitmap);
+                    Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.frame_2);
+                    overlay = Bitmap.createScaledBitmap(overlay, bitmap.getWidth(), bitmap.getHeight(), false);
+                    Canvas canvas = new Canvas(bitmap);
                     canvas.drawBitmap(overlay, new Matrix(), null);
-                    if(rotateBitmap != null){
+                    if(bitmap != null){
 
                         File filedir=new File(
                                 Environment
@@ -99,7 +99,7 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                         try
                         {
                             FileOutputStream fileOutputStream=new FileOutputStream(file);
-                            rotateBitmap.compress(Bitmap.CompressFormat.JPEG,100, fileOutputStream);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG,100, fileOutputStream);
 
                             fileOutputStream.flush();
                             fileOutputStream.close();
