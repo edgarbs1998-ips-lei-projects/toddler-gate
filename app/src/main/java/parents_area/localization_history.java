@@ -19,6 +19,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -101,32 +103,23 @@ public class localization_history extends FragmentActivity implements OnMapReady
                             public void onSnapshotReady(Bitmap snapshot) {
                                 bitmap = snapshot;
 
-                                OutputStream fout = null;
+                                try{
+                                    File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "ToddlerGate");
+                                    if (!mediaStorageDir.exists()) {
+                                        if (!mediaStorageDir.mkdirs()) {
+                                            Toast.makeText(getApplicationContext(), "Failed to Save Map Screenshot", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    File file = new File(mediaStorageDir, System.currentTimeMillis() + ".jpg");
+                                    FileOutputStream fout = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, fout);
 
-                                String filePath = System.currentTimeMillis() + ".jpeg";
-
-                                try
-                                {
-                                    fout = openFileOutput(filePath,
-                                            MODE_WORLD_READABLE);
-
-                                    // Write the string to the file
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
-                                    fout.flush();
-                                    fout.close();
+                                    openShareImageDialog(file);
                                 }
-                                catch (FileNotFoundException e)
-                                {
-                                    Log.d("ImageCapture", e.getMessage());
-                                    filePath = "";
+                                catch (IOException e){
+                                    e.printStackTrace ();
+                                    Toast.makeText(getApplicationContext(), "Not Capture", Toast.LENGTH_SHORT).show ();
                                 }
-                                catch (IOException e)
-                                {
-                                    Log.d("ImageCapture", e.getMessage());
-                                    filePath = "";
-                                }
-
-                                openShareImageDialog(filePath);
                             }
                         };
 
@@ -140,7 +133,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_ACCESS_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -261,9 +254,7 @@ public class localization_history extends FragmentActivity implements OnMapReady
     public void prepareMap() {
         mMap.setMyLocationEnabled(true);
         LocationManager locationManager;
-        String serviceName = Context.LOCATION_SERVICE;
-        locationManager = (LocationManager)
-                getSystemService(serviceName);
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
@@ -299,27 +290,17 @@ public class localization_history extends FragmentActivity implements OnMapReady
         }
     }
 
-    public void openShareImageDialog(String filePath)
+    public void openShareImageDialog(File file)
     {
-        File file = this.getFileStreamPath(filePath);
+        final ContentValues values = new ContentValues(2);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
+        final Uri contentUriFile = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-        if(!filePath.equals(""))
-        {
-            final ContentValues values = new ContentValues(2);
-            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-            values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
-            final Uri contentUriFile = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-            intent.setType("image/jpeg");
-            intent.putExtra(android.content.Intent.EXTRA_STREAM, contentUriFile);
-            startActivity(Intent.createChooser(intent, "Share Image"));
-        }
-        else
-        {
-            //This is a custom class I use to show dialogs...simply replace this with whatever you want to show an error message, Toast, etc.
-            Toast.makeText(localization_history.this, "", Toast.LENGTH_SHORT).show();
-        }
+        final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType("image/jpeg");
+        intent.putExtra(android.content.Intent.EXTRA_STREAM, contentUriFile);
+        startActivity(Intent.createChooser(intent, "Share Image"));
     }
 }
 

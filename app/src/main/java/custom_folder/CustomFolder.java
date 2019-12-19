@@ -1,13 +1,13 @@
 package custom_folder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -45,19 +45,27 @@ public class CustomFolder extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 String currPath = PathsList.get(position);
-                Uri currentFileUri = Uri.parse("file://" + currPath);
-                String MimeType = getMimeType(currPath);
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
+                String mimeType = getMimeType(currPath);
+                File file = new File(currPath);
+                Uri currentFileUri = FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                if(MimeType.contains("image")){
-                    intent.setDataAndType(currentFileUri, "image/*");
-                    startActivity(intent);
+                if(mimeType.contains("image")){
+                    intent.setDataAndType(currentFileUri, mimeType);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    try {
+                        startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Toast.makeText(CustomFolder.this,
+                                "No Application Available to View Images",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-
-                if(MimeType.contains("video")){
-                    intent.setDataAndType(currentFileUri, "video/*");
-
+                else if(mimeType.contains("video")){
+                    intent.setDataAndType(currentFileUri, mimeType);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     try {
                         startActivity(intent);
                     }
@@ -67,22 +75,21 @@ public class CustomFolder extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
-
-                if(MimeType.contains("audio")){
-                    intent.setDataAndType(currentFileUri, "audio/*");
-
+                else if(mimeType.contains("audio")){
+                    intent.setDataAndType(currentFileUri, mimeType);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     try {
                         startActivity(intent);
                     }
                     catch (ActivityNotFoundException e) {
                         Toast.makeText(CustomFolder.this,
-                                "No Application Available to Play Audio",
+                                "No Application Available to Play Audios",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
-
-                if(MimeType.contains("pdf")){
-                    intent.setDataAndType(Uri.parse("file://" + PathsList.get(position)), "application/pdf");
+                else if(mimeType.contains("pdf")){
+                    intent.setDataAndType(currentFileUri, mimeType);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     try {
                         startActivity(intent);
                     }
@@ -104,11 +111,15 @@ public class CustomFolder extends AppCompatActivity {
         int[] to = {
           R.id.listview_images, R.id.Description
         };
-        String customFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath() + "/Screenshots";
-        File directory = new File(customFolderPath);
+        File directory = new File(Environment.getExternalStorageDirectory(), "ToddlerGate");
+        if (!directory.exists()) {
+            if (!directory.mkdirs()) {
+                Toast.makeText(getApplicationContext(), "Failed to Access Custom Folder", Toast.LENGTH_SHORT).show();
+            }
+        }
         File [] folderfiles = directory.listFiles();
 
-        if(folderfiles[0].getPath() != null) {
+        if(folderfiles != null && folderfiles.length > 0 && folderfiles[0].getPath() != null) {
             Arrays.sort(folderfiles, new Comparator<File>() {
                 @Override
                 public int compare(File file1, File file2) {

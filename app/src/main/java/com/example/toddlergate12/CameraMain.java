@@ -34,9 +34,7 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     ImageView imageCapture;
     final int CAMERA_REQUEST = 1;
     final int FILE_PERMISSION = 0;
-    CameraMain scope = this;
-    // Gallery directory name to store the images or videos
-    public static final String GALLERY_DIRECTORY_NAME = "Toddler-Gate-CustomFolder";
+    boolean safeToTakePicture = false;
 
     int gallery_grid_Images[]={R.drawable.frame_1, R.drawable.frame_2, R.drawable.frame_3};
     ViewFlipper viewFlipper;
@@ -74,6 +72,8 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
             
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
+                camera.startPreview();
+
                 if (data != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data.length);
 
@@ -82,33 +82,33 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
                     overlay = Bitmap.createScaledBitmap(overlay, bitmap.getWidth(), bitmap.getHeight(), false);
                     Canvas canvas = new Canvas(bitmap);
                     canvas.drawBitmap(overlay, new Matrix(), null);
-                    if(bitmap != null){
 
-                        File filedir=new File(
-                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath() + "/Screenshots");
-                        if(!filedir.isDirectory()){
-                            filedir.mkdir();
-                        }
-                        File file = new File(filedir, System.currentTimeMillis()+".jpg");
-
-                        try
-                        {
-                            FileOutputStream fileOutputStream=new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG,100, fileOutputStream);
-
-                            fileOutputStream.flush();
-                            fileOutputStream.close();
-                            Toast toast = Toast.makeText(getApplicationContext(),"Photo taken",Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        catch(IOException e){
-                            e.printStackTrace();
-                        }
-                        catch(Exception exception)
-                        {
-                            exception.printStackTrace();
+                    File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "ToddlerGate");
+                    if (!mediaStorageDir.exists()) {
+                        if (!mediaStorageDir.mkdirs()) {
+                            Toast.makeText(getApplicationContext(), "Failed to Save Photo", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    File file = new File(mediaStorageDir, System.currentTimeMillis()+".jpg");
+
+                    try
+                    {
+                        FileOutputStream fileOutputStream=new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,100, fileOutputStream);
+
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+                        Toast toast = Toast.makeText(getApplicationContext(), "Photo taken", Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        safeToTakePicture = true;
+                    }
+                    catch(IOException e){
+                        safeToTakePicture = true;
+                        e.printStackTrace();
+                    }
+                } else {
+                    safeToTakePicture = true;
                 }
             }
         };
@@ -144,7 +144,13 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
     private void captureImage() {
+        if (!safeToTakePicture) {
+            Toast.makeText(getApplicationContext(), "Wait Last Photo to Process", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         camera.takePicture(null, null, jpegCallback);
+        safeToTakePicture = false;
     }
 
 
@@ -182,7 +188,8 @@ public class CameraMain extends AppCompatActivity implements SurfaceHolder.Callb
     }
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        camera.startPreview();
+        safeToTakePicture = true;
     }
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
